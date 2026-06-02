@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTBDF 2026 — Membangun Infrastruktur Kekayaan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --black: #080808;
+  --dark: #111;
+  --card: #161616;
+  --gold: #C9A84C;
+  --gold-light: #e2c97a;
+  --red: #A82A1A;
+  --white: #f2ede4;
+  --muted: #777770;
+  --border: #252525;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 48px 64px;
+  max-width: 780px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  z-index: 100;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.badge-dot {
+  width: 8px; height: 8px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.badge-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.badge-sep { color: var(--border); }
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 7vw, 68px);
+  font-weight: 900;
+  line-height: 1.08;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.hero-title-gold {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(42px, 7vw, 68px);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.08;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+
+.hero-desc {
+  font-size: 16px;
+  font-weight: 300;
+  color: #aaa;
+  line-height: 1.8;
+  max-width: 520px;
+  margin-bottom: 40px;
+}
+
+.hero-desc strong {
+  color: var(--white);
+  font-weight: 500;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+
+.meta-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.meta-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.scroll-hint {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.scroll-arrow {
+  display: inline-block;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+/* ── SECTIONS ── */
+.section {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 64px 48px;
+  border-top: 1px solid var(--border);
+}
+
+.section-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+/* ── TEMA BESAR ── */
+.tema-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  padding: 36px 36px 32px;
+  margin-bottom: 28px;
+}
+
+.tema-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.tema-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.tema-desc {
+  font-size: 14.5px;
+  color: #aaa;
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+.tema-desc strong { color: var(--white); font-weight: 500; }
+
+/* ── MATERI BARU ── */
+.materi-intro {
+  font-size: 15px;
+  color: #999;
+  line-height: 1.8;
+  margin-bottom: 36px;
+  max-width: 540px;
+}
+
+.materi-intro strong { color: var(--white); font-weight: 500; }
+
+.session-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+
+@media (max-width: 560px) {
+  .session-grid { grid-template-columns: 1fr; }
+  .hero, .section { padding-left: 24px; padding-right: 24px; }
+  .hero-title, .hero-title-gold { font-size: 38px; }
+}
+
+.session-item {
+  background: var(--card);
+  padding: 28px 24px;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.session-item:hover { background: #1e1e1e; }
+
+.snum {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.stitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.sdesc {
+  font-size: 12.5px;
+  color: #888;
+  line-height: 1.65;
+}
+
+.sdesc a { color: var(--gold-light); text-decoration: none; }
+
+.lock { position: absolute; top: 22px; right: 18px; font-size: 13px; }
+
+.new-tag {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  margin-bottom: 10px;
+}
+
+/* ── TAKEHOME ── */
+.takehome {
+  border: 1px solid var(--border);
+  padding: 32px 36px;
+  background: var(--card);
+  margin-top: 28px;
+}
+
+.th-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.th-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+.th-body {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  line-height: 1.7;
+  color: var(--white);
+}
+
+.th-body em { font-style: italic; }
+.th-body strong { color: var(--gold); font-weight: 900; }
+
+/* ── QUOTE ── */
+.big-quote {
+  padding: 56px 48px;
+  max-width: 780px;
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+}
+
+.bq-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  font-style: italic;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 20px;
+}
+
+.bq-text strong { color: var(--white); font-style: normal; font-weight: 900; }
+
+.bq-source {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── CTA ── */
+.cta-section {
+  background: var(--dark);
+  border-top: 1px solid var(--border);
+  padding: 72px 48px 80px;
+  max-width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--red));
+}
+
+.cta-inner { max-width: 600px; margin: 0 auto; }
+
+.cta-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+
+.cta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 16px;
+}
+
+.cta-title em { color: var(--gold); font-style: italic; }
+
+.cta-sub {
+  font-size: 14.5px;
+  color: #999;
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+
+.cta-sub strong { color: var(--white); font-weight: 500; }
+
+.cta-details {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.cd-item { display: flex; flex-direction: column; gap: 4px; text-align: center; }
+
+.cd-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cd-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.btn-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #25D366;
+  color: #000;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 18px 44px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-bottom: 16px;
+}
+
+.btn-wa:hover {
+  background: #1fb856;
+  transform: translateY(-2px);
+}
+
+.btn-wa svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+.cta-note {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 28px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+
+.footer-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--white);
+}
+
+.footer-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.footer-url {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">
+    <span class="badge-dot"></span>
+    <span class="badge-text">HTBDF</span>
+    <span class="badge-sep">·</span>
+    <span class="badge-text">Workshop Series</span>
+    <span class="badge-sep">·</span>
+    <span class="badge-text">How To Be Debt Free</span>
+  </div>
+
+  <div class="hero-eyebrow">Workshop Nasional · 29–31 Juli 2026 · Jakarta</div>
+
+  <div class="hero-title">Membangun</div>
+  <div class="hero-title">Infrastruktur</div>
+  <div class="hero-title-gold">Kekayaan</div>
+
+  <p class="hero-desc">
+    Tahun ini HTBDF hadir dengan materi yang belum pernah dibawakan sebelumnya.
+    <strong>Bukan tentang bertahan dari hutang.</strong>
+    Tentang membangun fondasi ekonomi yang tumbuh —
+    <strong>di tengah apapun yang terjadi.</strong>
+  </p>
+
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Program</span>
+      <span class="meta-val">HTBDF Up Class 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Tanggal</span>
+      <span class="meta-val">29–31 Juli 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Lokasi</span>
+      <span class="meta-val">Jakarta</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Pembawa</span>
+      <span class="meta-val">President IIBF</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint" onclick="document.getElementById('tema').scrollIntoView({behavior:'smooth'})">
+    <span class="scroll-arrow">↓</span>
+    <span>Lihat materi baru 2026</span>
+  </div>
+</section>
+
+<!-- TEMA BESAR -->
+<section class="section" id="tema">
+  <div class="section-eyebrow">Tema Besar 2026</div>
+
+  <div class="tema-block">
+    <div class="tema-tag">Workshop Session Utama</div>
+    <div class="tema-title">"Membangun Infrastruktur Kekayaan"</div>
+    <p class="tema-desc">
+      Kebanyakan pengusaha membangun <strong>penghasilan</strong>, bukan <strong>kekayaan</strong>.
+      Penghasilan habis. Kekayaan bertumbuh.
+      HTBDF 2026 membahas bagaimana membangun struktur ekonomi pribadi
+      yang tidak bergantung pada satu sumber, tidak mudah runtuh,
+      dan terus tumbuh bahkan saat bisnis melambat.
+    </p>
+  </div>
+
+  <div class="tema-block" style="border-left-color: var(--red);">
+    <div class="tema-tag">Mengapa Ini Berbeda Dari HTBDF Sebelumnya</div>
+    <p class="tema-desc">
+      HTBDF selama ini dikenal sebagai workshop <strong>keluar dari hutang</strong>.
+      Tahun ini naik level — bukan hanya bebas hutang,
+      tapi <strong>bagaimana posisi keuangan Anda menjadi titik peluncuran</strong>,
+      bukan beban yang terus ditanggung.
+    </p>
+  </div>
+</section>
+
+<!-- MATERI BARU -->
+<section class="section" id="materi">
+  <div class="section-eyebrow">Materi Baru 2026</div>
+  <h2 class="section-title">Building Long-Term Economy</h2>
+  <p class="materi-intro">
+    Sesi eksklusif yang <strong>pertama kali dibawakan</strong> di HTBDF 2026.
+    Langsung oleh President IIBF. Tidak ada rekaman. Tidak ada replay.
+  </p>
+
+  <div class="session-grid">
+    <div class="session-item">
+      <div class="new-tag">Materi Baru</div>
+      <div class="snum">01</div>
+      <div class="stitle">The Anatomy<br>of a Comeback</div>
+      <p class="sdesc">Mengapa orang kaya bangkit lebih cepat setiap kali jatuh — dan apa yang membuat sebagian orang tidak pernah bangkit sama sekali.</p>
+    </div>
+    <div class="session-item">
+      <div class="new-tag">Materi Baru</div>
+      <div class="snum">02</div>
+      <div class="stitle">Capital Event</div>
+      <p class="sdesc">Ada dua dunia dalam ekonomi seseorang. <a>Income</a> yang menghidupimu — dan <a>Capital Event</a> yang mengubah posisimu selamanya.</p>
+    </div>
+    <div class="session-item">
+      <div class="new-tag">Materi Baru</div>
+      <div class="snum">03</div>
+      <div class="stitle">Center of Gravity<br>for Big Money</div>
+      <p class="sdesc">Uang besar tidak datang karena dicari. Ia bergerak menuju satu titik pusat: <a>nilai yang terlalu kuat untuk diabaikan.</a></p>
+    </div>
+    <div class="session-item">
+      <div class="snum">04</div>
+      <span class="lock">🔒</span>
+      <div class="stitle">The Strategy</div>
+      <p class="sdesc">Semua yang dipelajari hari ini mengarah pada satu strategi. <a>Akan dibuka di penghujung sesi.</a></p>
+    </div>
+  </div>
+
+  <div class="takehome">
+    <div class="th-label">Yang Akan Anda Bawa Pulang</div>
+    <p class="th-body">
+      <em>Strategi yang membuat situasi</em> <strong>tetap terkendali,</strong><br>
+      <em>uang tetap mengalir bahkan di titik terberat,</em><br>
+      <em>dan kebangkitan yang bukan sekadar pulih —</em>
+      <strong>tapi naik level.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="big-quote">
+  <p class="bq-text">
+    <em>"Barang siapa tidak dengan sengaja membangun kekayaan,</em><br>
+    <strong>kemungkinan besarnya secara tidak sadar sedang membangun kemiskinan."</strong>
+  </p>
+  <div class="bq-source">— Ir. Heppy Trenggono · President IIBF</div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section" id="daftar">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">★ Daftarkan Diri Sekarang</div>
+    <h2 class="cta-title">
+      Jangan tunggu situasi<br>
+      yang memaksa Anda <em>berubah.</em>
+    </h2>
+    <p class="cta-sub">
+      Sesi <strong>Building Long-Term Economy</strong> hanya ada di satu panggung.
+      Workshop Nasional HTBDF Up Class 2026 — <strong>29–31 Juli 2026, Jakarta.</strong>
+      Klik tombol di bawah, chat langsung ke tim kami.
+    </p>
+
+    <div class="cta-details">
+      <div class="cd-item">
+        <span class="cd-label">Program</span>
+        <span class="cd-val">HTBDF Up Class 2026</span>
+      </div>
+      <div class="cd-item">
+        <span class="cd-label">Tanggal</span>
+        <span class="cd-val">29–31 Juli 2026</span>
+      </div>
+      <div class="cd-item">
+        <span class="cd-label">Lokasi</span>
+        <span class="cd-val">Jakarta</span>
+      </div>
+    </div>
+
+    <a class="btn-wa"
+       href="https://wa.me/6285147777576?text=Halo%2C%20saya%20ingin%20daftar%20HTBDF%20Up%20Class%202026.%20Mohon%20info%20selengkapnya."
+       target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Chat WhatsApp Sekarang
+    </a>
+
+    <p class="cta-note">
+      Workshop Legendaris · 17 Tahun · Pusat Kebangkitan Ribuan Pengusaha Nasional<br>
+      Kursi terbatas. Kami akan bantu proses pendaftaran Anda.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div>
+    <div class="footer-brand">IIBF</div>
+    <div class="footer-sub">Indonesian Islamic Business Forum</div>
+  </div>
+  <div class="footer-url">IIBF.OR.ID</div>
+</footer>
+
+</body>
+</html>
